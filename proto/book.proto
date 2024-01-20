@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package grpc_bookauthor;
+import "pagination.proto";
+option go_package = "grpc-bookauthor/proto";
+
+service BookService {
+    rpc GetBooks(Page) returns(Books);
+    rpc GetBook(Id) returns(Book);
+    rpc CreateBook(Book) returns(Id);
+    rpc UpdateBook(Book) returns(Status);
+    rpc DeleteBook(Id) returns(Status);
+}
+
+message Book {
+    uint64 id = 1;
+    string title = 2;
+    string isbn = 3;
+    Author author = 4;
+}
+
+message Books {
+    Pagination pagination = 1;
+    repeated Book data = 2;
+}
+
+message Author {
+    uint32 id = 1;
+    string name = 2;
+}
+
+message Id {
+    uint64 id = 1;
+}
+
+message Status {
+    uint32 status = 1;
+}
+
+message Page {
+    optional int64 page = 1;
+}
